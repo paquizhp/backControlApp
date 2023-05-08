@@ -8,8 +8,8 @@ const Pay = db.pay;
 
 
 checkWorkerExisted = (req, res, next) => {
-  console.log("ididididid",req.body.id);
-  Worker.findById(req.body.id).exec((err, user) => {
+  const idWorker= req.body.worker;
+  Worker.findById(idWorker).exec((err, user) => {
     if (err) {
       res.status(400).send({ message: `Failed! Worker does not exist!` });
       return;
@@ -23,7 +23,7 @@ checkWorkerExisted = (req, res, next) => {
 };
 
 checkDuplicatePay = (req, res, next) => {
-  Pay.findOne({ date:req.body.date, job: req.body.job, worker: req.body.id  }) 
+  Pay.findOne({ date:req.body.date, job: req.body.job, worker: req.body.worker}) 
   .then((pay) => {
     if (pay) {
       console.log("pay duplicado", pay);
